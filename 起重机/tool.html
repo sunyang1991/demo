@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>起重机分类工具</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+	body{color:#666666;font:bold 15px/15px "宋体";}
+	.wrapper{width:800px;margin:0 auto;margin-top:100px}
+	.wrapper .qidian-top{width:100%;height:40px;line-height:40px;font-size:16px;text-align:center;color:#000;border-bottom:3px solid #E8E8E8;}
+	.wrapper .container ul{padding:0;margin:0;width:860px;display:block;}
+	.wrapper .container ul li{list-style:none;width:400px;margin-left:3px;height:50px;line-height:50px;float:left;overflow:hidden;}
+	.wrapper .container ul li:even{background:#F8F8FA;}
+	.wrapper .container ul li input[type='text']{padding:0;height:20px;line-height:20px;width:150px;}
+	.wrapper .container ul li span{display:block;width:150px;float:left;text-align:right;}
+</style>
+</head>
+<body bgcolor="" style="width: 100%; height: 100%;">
+<div class="wrapper">
+	<div class="qidian-top">
+			起重机分类计算
+	</div>
+	<div class="container">
+			<ul>
+				<li><span>最大起重量:</span><input type="text" id="M" onchange="cherk(this)"
+style="text-align:right;color:#DFDFDF" value="必填项！" onfocus="if(this.value=='必填项！'){this.value=''};this.style.color='black';" onblur="if(this.value==''||this.value=='必填项！'){this.value='必填项！';this.style.color='#DFDFDF';}"
+				/>&nbsp;&nbsp;&nbsp;&nbsp;t</li>
+				<li><span>起升高度:</span><input type="text" id="h" onchange="cherk(this)"style="text-align:right;color:#DFDFDF" value="必填项！" onfocus="if(this.value=='必填项！'){this.value=''};this.style.color='black';" onblur="if(this.value==''||this.value=='必填项！'){this.value='必填项！';this.style.color='#DFDFDF';}"/>&nbsp;&nbsp;&nbsp;&nbsp;m</li>
+				<li style="background:#F8F8FA;">
+						<span>起升速度:</span><input type="text" id="v1" onchange="cherk(this)"style="text-align:right;" value="0"/>&nbsp;&nbsp;&nbsp;&nbsp;m/min
+				</li>
+				<li style="background:#F8F8FA;">
+						<span>起重机运行速度:</span><input type="text" id="v2" onchange="cherk(this)"style="text-align:right;" value="0"/>&nbsp;&nbsp;&nbsp;&nbsp;m/min
+				</li>
+				<li><span>小车运行速度:</span><input type="text" id="v3" onchange="cherk(this)"style="text-align:right;" value="0"/>&nbsp;&nbsp;&nbsp;&nbsp;m/min</li>
+				<li><span>变幅速度:</span><input type="text" id="v4" onchange="cherk(this)"style="text-align:right;" value="0"/>&nbsp;&nbsp;&nbsp;&nbsp;m/min</li>
+				<li style="background:#F8F8FA;">
+						<span>回转速度:</span><input type="text" id="v5" onchange="cherk(this)"style="text-align:right;" value="0"/>&nbsp;&nbsp;&nbsp;&nbsp;m/min
+				</li>
+				<li style="background:#F8F8FA;">
+				</li>
+				<li style="text-align:right;">	
+					是否调运熔融金属、有毒有害等特殊物品：
+				</li>
+				<li style="text-align:left;">
+					是：
+					<input id="yes" type="radio"  name="arg" value="true" />
+					否：
+					<input id="no" type="radio"  checked="checked" name="arg" value="false" />
+				</li>
+					<li style="text-align:right;font-size:16px;color:#000;border-bottom:3px solid #E8E8E8;">输出</li>
+					<li style="text-align:left;font-size:16px;color:#000;border-bottom:3px solid #E8E8E8;">结果</li>
+				<li ><span>工作速度：</span><input type="text" id="v" onchange="cherk(this)" style="text-align:right;" readonly="readonly" value="0"/>&nbsp;&nbsp;&nbsp;&nbsp;m/s</li>
+				<li >
+					<span>起重机类别：</span><input type="text" style="text-align:right;" id="type" readonly="readonly" onchange="cherk(this)"/>&nbsp;&nbsp;&nbsp;&nbsp;类
+				</li>
+			
+				<li style="background:#F8F8FA;">9.8H+0.5v2（H,V）:<input type="text" style="text-align:right;" id="e" readonly="readonly" onchange="cherk(this)" value="0"/></li>
+				<li style="background:#F8F8FA;"><span>能量值E:</span><input type="text" style="text-align:right;" id="e2" readonly="readonly" onchange="cherk(this)" value="0"/></li>
+				
+
+			</ul>
+			<div align="center">
+			<input  type="button"value="" onclick="tool()" style="cursor:pointer;margin:30px 300px;border:0;height:40px;width:112px;background:url('calculate.png') no-repeat;"/>
+			</div>
+			
+<script>
+function tool(){
+	var M=document.getElementById("M").value;
+	var h=document.getElementById("h").value;
+	var v1=(parseFloat(document.getElementById("v1").value)/60).toFixed(2);
+	var v2=(parseFloat(document.getElementById("v2").value)/60).toFixed(2);
+	var v3=(parseFloat(document.getElementById("v3").value)/60).toFixed(2);
+	var v4=(parseFloat(document.getElementById("v4").value)/60).toFixed(2);
+	var v5=(parseFloat(document.getElementById("v5").value)/60).toFixed(2);
+	var v=Math.sqrt(v1*v1+v2*v2+v3*v3+v4*v4);
+	v=v.toFixed(2);
+	var e=9.8*h+0.5*v*v;
+	e=e.toFixed(2);
+	var e2=M*e;
+	e2=e2.toFixed(2);
+	if(M=="必填项！" || h=="必填项！"){
+	alert("必填项不可为空！");
+	}else{ 
+	M=parseFloat(document.getElementById("M").value)*1000;
+	h=parseFloat(document.getElementById("h").value);
+	if(M<1000 || h<2){
+	alert("不在监管范围:（起重量必须大于等于1，起重高度必须大于等于2）");
+	}else  if(document.getElementById("yes").checked){
+    	document.getElementById("e").value=e;
+    	document.getElementById("v").value=v;
+    	document.getElementById("type").value="Ⅲ";
+    }else{
+    	if(e2<2500000){
+    		document.getElementById("e").value=e;
+        	document.getElementById("v").value=v;
+        	document.getElementById("type").value="Ⅰ";
+			document.getElementById("e2").value=e2;
+    	}else if(e2<25000000){
+    		document.getElementById("e").value=e;
+        	document.getElementById("v").value=v;
+        	document.getElementById("type").value="Ⅱ";
+			document.getElementById("e2").value=e2;
+    	}else{
+    		document.getElementById("e").value=e;
+        	document.getElementById("v").value=v;
+        	document.getElementById("type").value="Ⅲ";
+			document.getElementById("e2").value=e2;
+    	}
+    }
+	}
+}
+function cherk(e){
+	var arg=e.value;
+	if(!/^\d+(?=\.{0,1}\d+$|$)/.test(arg)){
+		alert("请按规则填写参数!");
+		e.value="0";
+	}
+}
+</script>
+</div>
+</div>
+</body>
+</html>

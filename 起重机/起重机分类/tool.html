@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>起重机分类工具</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body bgcolor="#CCCCCC" style="width: 100%; height: 100%;">
+最大起重量:<input type="text" id="M" onchange="cherk(this)" value="0"/>t</br>
+起升高度:<input type="text" id="h" onchange="cherk(this)" value="0"/>m</br>
+起升速度:<input type="text" id="v1" onchange="cherk(this)" value="0"/>m/min</br>
+起重机运行速度:<input type="text" id="v2" onchange="cherk(this)" value="0"/>m/min</br>
+小车运行速度:<input type="text" id="v3" onchange="cherk(this)" value="0"/>m/min</br>
+变幅速度:<input type="text" id="v4" onchange="cherk(this)" value="0"/>m/min</br>
+回转速度:<input type="text" id="v5" onchange="cherk(this)" value="0"/>m/min</br>
+是否调运熔融金属、有毒有害等特殊物品：
+是：
+<input id="yes" type="radio" checked="checked" name="arg" value="true" />
+否：
+<input id="no" type="radio" name="arg" value="false" /><br />
+合成速度：<input type="text" id="v" onchange="cherk(this)" readonly="readonly" value="0"/>m/s</br>
+起重机类别：<input type="text" id="type" readonly="readonly" onchange="cherk(this)"/>类</br>
+9.8H+0.5V^2:<input type="text" id="e" readonly="readonly" onchange="cherk(this)" value="0"/></br>
+<input  type="button"value="计算" onclick="tool()"/>
+	<script>
+function tool(){
+	var M=parseFloat(document.getElementById("M").value)*1000;
+	var h=parseFloat(document.getElementById("h").value);
+	var v1=parseFloat(document.getElementById("v1").value)/60;
+	var v2=parseFloat(document.getElementById("v2").value)/60;
+	var v3=parseFloat(document.getElementById("v3").value)/60;
+	var v4=parseFloat(document.getElementById("v4").value)/60;
+	var v5=parseFloat(document.getElementById("v5").value)/60;
+	var v=Math.sqrt(v1*v1+v2*v2+v3*v3+v4*v4);
+	var e=9.8*h+0.5*v*v;
+	var e2=M*e;
+    if(document.getElementById("yes").checked){
+    	document.getElementById("e").value=e;
+    	document.getElementById("v").value=v;
+    	document.getElementById("type").value="Ⅲ";
+    }else{
+    	if(e2<"2500000"){
+    		document.getElementById("e").value=e;
+        	document.getElementById("v").value=v;
+        	document.getElementById("type").value="Ⅰ";
+    	}else if(e2<"25000000"){
+    		document.getElementById("e").value=e;
+        	document.getElementById("v").value=v;
+        	document.getElementById("type").value="Ⅱ";
+    	}else{
+    		document.getElementById("e").value=e;
+        	document.getElementById("v").value=v;
+        	document.getElementById("type").value="Ⅲ";
+    	}
+    }
+}
+function cherk(e){
+	var arg=e.value;
+	if(!/^\d+(?=\.{0,1}\d+$|$)/.test(arg)){
+		alert("请按规则填写参数!");
+		e.value="0";
+	}
+}
+</script>
+</body>
+</html>
